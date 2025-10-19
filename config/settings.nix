@@ -7,7 +7,7 @@
     cursorline = true;
     cursorcolumn = false;
     auto-completion = true;
-    auto-format = true;
+    auto-format = false;
     auto-save = false;
     idle-timeout = 400;
     completion-trigger-len = 2;
