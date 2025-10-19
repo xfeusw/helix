@@ -1,4 +1,4 @@
-something {
+{
   normal = {
     # Space as leader key
     space = {
