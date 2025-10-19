@@ -1,5 +1,9 @@
 {
   normal = {
+    # File explorer (using file picker)
+    e = "file_picker";
+    E = "file_picker_in_current_directory";
+
     # Space as leader key
     space = {
       f = {
