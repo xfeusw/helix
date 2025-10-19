@@ -2,7 +2,7 @@
   theme = "tokyonight_storm";
 
   editor = {
-    line-number = "relative";
+    line-number = "absolute";
     mouse = true;
     cursorline = true;
     cursorcolumn = false;
@@ -16,9 +16,9 @@
     bufferline = "multiple";
 
     statusline = {
-      left = ["mode" "spinner" "file-name" "file-modification-indicator"];
-      center = ["diagnostics"];
-      right = ["selections" "position" "file-encoding" "file-line-ending" "file-type"];
+      left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];
+      center = [ "diagnostics" ];
+      right = [ "selections" "position" "file-encoding" "file-line-ending" "file-type" ];
       separator = "│";
       mode = {
         normal = "NORMAL";
