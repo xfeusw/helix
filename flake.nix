@@ -7,7 +7,6 @@
   };
 
   outputs = {
-    self,
     nixpkgs,
     helix,
     ...
@@ -19,24 +18,20 @@
     helixConfig = import ./config {inherit pkgs;};
   in {
     # Home-manager module
-    homeManagerModules.default = {
-      config,
-      lib,
-      pkgs,
-      ...
-    }: {
+    homeManagerModules.default = {...}: {
       programs.helix = {
         enable = true;
         package = helix.packages.${system}.default;
 
-        # Import settings
-        settings = helixConfig.settings;
+        # Import settings with keybindings merged
+        settings =
+          helixConfig.settings
+          // {
+            keys = helixConfig.keybindings;
+          };
 
         # Import languages configuration
         languages = helixConfig.languages;
-
-        # Import keybindings
-        settings.keys = helixConfig.keybindings;
       };
 
       # Add additional packages needed for Helix
