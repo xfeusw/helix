@@ -19,3 +19,6 @@ result-*
 # OS files
 .DS_Store
 Thumbs.db
+
+config.toml
+languages.toml
