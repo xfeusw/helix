@@ -15,6 +15,9 @@
     color-modes = true;
     bufferline = "multiple";
 
+    # Clipboard configuration
+    clipboard-provider = "wayland";
+
     statusline = {
       left = [ "mode" "spinner" "file-name" "file-modification-indicator" ];
       center = [ "diagnostics" ];
