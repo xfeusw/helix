@@ -6,44 +6,48 @@
     helix.url = "github:helix-editor/helix";
   };
 
-  outputs = {
-    nixpkgs,
-    helix,
-    ...
-  }: let
-    system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+  outputs = { self, nixpkgs, helix, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = nixpkgs.legacyPackages.${system};
 
-    # Import all configurations from default.nix
-    helixConfig = import ./config {inherit pkgs;};
-  in {
-    # Home-manager module
-    homeManagerModules.default = {...}: {
-      programs.helix = {
-        enable = true;
-        package = helix.packages.${system}.default;
+      # Import all configurations from default.nix
+      helixConfig = import ./config { inherit pkgs; };
+    in
+    {
+      # Home-manager module
+      homeManagerModules.default = { config, lib, pkgs, ... }: {
+        options.programs.helix.installExtraPackages = lib.mkOption {
+          type = lib.types.bool;
+          default = true;
+          description = "Whether to install extra packages (LSPs, formatters, etc.)";
+        };
 
-        # Import settings with keybindings merged
-        settings =
-          helixConfig.settings
-          // {
-            keys = helixConfig.keybindings;
+        config = {
+          programs.helix = {
+            enable = true;
+            package = helix.packages.${system}.default;
+
+            # Import settings with keybindings merged
+            settings = helixConfig.settings // {
+              keys = helixConfig.keybindings;
+            };
+
+            # Import languages configuration
+            languages = helixConfig.languages;
           };
 
-        # Import languages configuration
-        languages = helixConfig.languages;
+          # Add additional packages needed for Helix (only if enabled)
+          home.packages = lib.mkIf config.programs.helix.installExtraPackages helixConfig.packages;
+        };
       };
 
-      # Add additional packages needed for Helix
-      home.packages = helixConfig.packages;
-    };
+      # For testing/development
+      packages.${system}.default = helix.packages.${system}.default;
 
-    # For testing/development
-    packages.${system}.default = helix.packages.${system}.default;
-
-    # Expose configurations for reuse or inspection
-    lib = {
-      inherit (helixConfig) settings languages keybindings packages;
+      # Expose configurations for reuse or inspection
+      lib = {
+        inherit (helixConfig) settings languages keybindings packages;
+      };
     };
-  };
 }
