@@ -1,5 +1,5 @@
 {
-  theme = "tokyonight_storm";
+  theme = "tokyonight";
 
   editor = {
     line-number = "absolute";
