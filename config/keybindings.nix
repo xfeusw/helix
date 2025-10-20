@@ -1,4 +1,4 @@
-something {
+{
   normal = {
     # File explorer (using file picker)
     e = "file_picker";
